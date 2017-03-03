@@ -2,8 +2,8 @@ package service;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.ToDoItem;
 import model.ToDoItemPayload;
+import repo.ToDoRepo;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -14,7 +14,7 @@ public class ToDoService {
     private static final int HTTP_BAD_REQUEST = 400;
 
     public static void main( String[] args) {
-        ToDoItem model = new ToDoItem();
+        ToDoRepo repo = ToDoRepo.getInstance();
 
         // insert a post (using HTTP post method)
         post("/todo", (request, response) -> {
@@ -25,7 +25,7 @@ public class ToDoService {
                     response.status(HTTP_BAD_REQUEST);
                     return "";
                 }
-                int id = model.createItem(creation.getTitle(), creation.getContent(), creation.getCategories());
+                int id = repo.createItem(creation.getAuthor(), creation.getContent());
                 response.status(200);
                 response.type("application/json");
                 return id;
@@ -39,7 +39,7 @@ public class ToDoService {
         get("/list", (request, response) -> {
             response.status(200);
             response.type("application/json");
-            return dataToJson(model.getToDoList());
+            return dataToJson(repo.getToDoList());
         });
     }
 }
