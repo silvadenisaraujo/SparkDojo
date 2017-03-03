@@ -21,10 +21,6 @@ public class ToDoRepo {
 
     public int createItem(String author, String content){
         ToDoItem toDoItem = new ToDoItem();
-        toDoItem.setId(id);
-        toDoItem.setAuthor(author);
-        toDoItem.setContent(content);
-        toDoList.put(getNextId(), toDoItem);
         return id;
     }
 
@@ -32,8 +28,12 @@ public class ToDoRepo {
         return toDoList.keySet().stream().sorted().map((id) -> toDoList.get(id)).collect(Collectors.toList());
     }
 
+    void cleanUpRepo(){
+        toDoList = new HashMap<>();
+    }
+
     private int getNextId() {
-        return ++id;
+        return 0;
     }
 
 }
