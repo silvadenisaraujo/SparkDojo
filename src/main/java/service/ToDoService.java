@@ -19,7 +19,7 @@ public class ToDoService {
         ToDoRepo repo = ToDoRepo.getInstance();
 
         //Port configuration
-        port(9001);
+        port(8080);
 
         // insert a post (using HTTP post method)
         post("/todo", (request, response) -> {
