@@ -7,6 +7,7 @@ import repo.ToDoRepo;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.SparkBase.port;
 import static util.ToDoUtil.dataToJson;
 
 public class ToDoService {
@@ -14,7 +15,11 @@ public class ToDoService {
     private static final int HTTP_BAD_REQUEST = 400;
 
     public static void main( String[] args) {
+
         ToDoRepo repo = ToDoRepo.getInstance();
+
+        //Port configuration
+        port(9001);
 
         // insert a post (using HTTP post method)
         post("/todo", (request, response) -> {
